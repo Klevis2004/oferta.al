@@ -57,6 +57,13 @@
                     <th scope="col">Komenti</th>
                     <th scope="col">Dokumentacioni</th>
                     <th scope="col">Informacioni Teknik</th>
+                    <th scope="col">Statusi</th>
+                    @if (Auth::check() && Auth::user()->role == 1)
+                        <th scope="col">Konfirmo</th>
+                    @endif
+                    @if (Auth::user()->role == 1 or $product->status != 0)
+                        <th scope="col">Komenti</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -85,6 +92,66 @@
                             @endif
                         </td>
                         <td>{{ $ofert->info ?? 'Null' }}</td>
+                        <td>
+                            @if ($ofert->status == 0)
+                                <span style="color: orange;"><i class="fas fa-circle"></i></span>
+                                <p>Ne Shqyrtim</p>
+                            @elseif($ofert->status == 1)
+                                <span style="color: green;"><i class="fas fa-circle"></i></span>
+                                <p>Për tu konfirmuar</p>
+                            @elseif($ofert->status == 2)
+                                <span style="color: red;"><i class="fas fa-circle"></i></span>
+                                <p>Refuzuar</p>
+                            @elseif($ofert->status == 3)
+                                <span style="color: green;"><i class="fas fa-check"></i></span>
+                                <p>Përfunduar</p>
+                            @endif
+                        </td>
+                        @if (Auth::check() && Auth::user()->role == 1)
+                            <td>
+                                <div class="d-flex">
+                                    <form action="{{ route('check', ['id' => $ofert->id]) }}" method="post">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" name="check" class="btn btn-outline-success me-2"><i
+                                                class="fa fa-check"></i></button>
+                                    </form>
+                                    <form action="{{ route('uncheck', ['id' => $ofert->id]) }}" method="post">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" name="uncheck" class="btn btn-outline-danger"><i
+                                                class="fa fa-cancel"></i></button>
+                                    </form>
+                                </div>
+                            </td>
+                        @endif
+
+                        @if (Auth::check() && Auth::user()->role == 1)
+                            <td>
+                                <form class="form-inline" action="{{ route('staus_comm', ['id' => $ofert->id]) }}"
+                                    method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="input-group">
+                                        <textarea class="form-control" name="status_comm" cols="30" rows="1" style="width: 100%"></textarea>
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-outline-success mt-2"><i
+                                                    class="fa fa-paper-plane"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </td>
+                        @else
+                            @if ($product->status != 0)
+                                @if ($ofert->status_comm == null)
+                                    <td></td>
+                                @else
+                                    <td>{{ $ofert->status_comm }}</td>
+                                @endif
+                            @endif
+                            <td></td>
+                        @endif
+
                     </tr>
                     {{-- @endif --}}
                 @endforeach

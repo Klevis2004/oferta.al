@@ -50,16 +50,21 @@
         <table class="table" id="table_id">
             <thead>
                 <tr>
-                    <th scope="col">Emri</th>
+                    <th scope="col">Emri Klientit</th>
+                    <th scope="col">Emri Projektit</th>
                     <th scope="col">Data Dorëzimit</th>
                     <th scope="col">Komenti</th>
                     <th scope="col">Statusi</th>
+                    @if (Auth::check() && Auth::user()->role == 1)
+                        <th scope="col">Konfirmo</th>
+                    @endif
                     <th scope="col">Lexo më shumë</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($product as $products)
                     <tr>
+                        <td>{{ $products->user_id }}</td>
                         <td>{{ $products->emri }}</td>
                         <td>{{ $products->data_dorezimit }}</td>
                         <td>{{ $products->komenti }}</td>
@@ -69,7 +74,7 @@
                                 <p>Ne Shqyrtim</p>
                             @elseif($products->status == 1)
                                 <span style="color: green;"><i class="fas fa-circle"></i></span>
-                                <p>Konfirmo</p>
+                                <p>Për tu konfirmuar</p>
                             @elseif($products->status == 2)
                                 <span style="color: red;"><i class="fas fa-circle"></i></span>
                                 <p>Refuzuar</p>
@@ -78,7 +83,25 @@
                                 <p>Përfunduar</p>
                             @endif
                         </td>
-
+                        @if (Auth::check() && Auth::user()->role == 1)
+                            <td>
+                                <div class="d-flex">
+                                    <form action="{{ route('product_check', ['id' => $products->id]) }}" method="post">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" name="check" class="btn btn-outline-success me-2"><i
+                                                class="fa fa-check"></i></button>
+                                    </form>
+                                    <form action="{{ route('product_uncheck', ['id' => $products->id]) }}"
+                                        method="post">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" name="uncheck" class="btn btn-outline-danger"><i
+                                                class="fa fa-cancel"></i></button>
+                                    </form>
+                                </div>
+                            </td>
+                        @endif
                         <td><a href="{{ route('oferta', ['id' => $products->id]) }}"><i
                                     class="fas fa-arrow-right"></i></a>
                         </td>

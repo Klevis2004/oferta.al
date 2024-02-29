@@ -119,7 +119,10 @@
                             </li>
                             @if (Auth::user()->role == 1)
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.index') }}">Control Panel</a>
+                                    <a class="nav-link" href="{{ route('menaxher.index') }}">Control Panel</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('menaxher.kerkesat') }}">Kërkesat</a>
                                 </li>
                             @endif
                         </ul>

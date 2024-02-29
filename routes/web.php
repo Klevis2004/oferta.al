@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AllController;
+use App\Http\Controllers\MenaxherController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,8 +29,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/produktet', [AllController::class, 'produktet'])->name('produktet');
     Route::post('/oferta_store', [AllController::class, 'oferta_store'])->name('oferta_store');
     Route::post('/product_store', [AllController::class, 'product_store'])->name('product_store');
+    Route::put('/check/{id}', [AllController::class, 'check'])->name('check');
+    Route::put('/uncheck/{id}', [AllController::class, 'uncheck'])->name('uncheck');
+    Route::put('/product_check/{id}', [AllController::class, 'product_check'])->name('product_check');
+    Route::put('/product_uncheck/{id}', [AllController::class, 'product_uncheck'])->name('product_uncheck');
+    Route::put('staus_comm/{id}', [AllController::class, 'staus_comm'])->name('staus_comm');
 
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+
+    Route::get('/home', [MenaxherController::class, 'home'])->name('menaxher.index');
+    Route::get('/kerkesat', [MenaxherController::class, 'kerkesat'])->name('menaxher.kerkesat');
 
 });
 

@@ -18,7 +18,7 @@ class AllController extends Controller
         return view('contain.produktet');
     }
     public function dashboard(){
-        $product = Product::all();
+        $product = Product::where('user_id', Auth::id())->get();
         return view('dashboard', ['product' => $product]);
     }
     public function oferta($id){
@@ -28,9 +28,7 @@ class AllController extends Controller
     }
 
     public function oferta_store(OfertaRequest $request){
-        // dd($request->all());
         $validated = $request->validated();
-        // dd($validated);
 
         if ($request->hasFile('file')) {
             $uploadedFile = $request->file('file');
@@ -59,5 +57,56 @@ class AllController extends Controller
 
         $product = Product::create($validated);
         return redirect()->back()->with('success', 'Prokti u krijua me sukses!');
+    }
+        public function check(Request $request, string $id)
+    {
+        $validated['status'] = 1;
+        $oferta = Oferta::findOrFail($id);
+        
+        $oferta->fill($validated);
+        $oferta->save();
+
+        return redirect()->back()->with('success', 'Informacioni u përditësua me sukses!');
+    }
+    public function uncheck(Request $request, string $id)
+    {
+        $validated['status'] = 2;
+        $oferta = Oferta::findOrFail($id);
+        
+        $oferta->fill($validated);
+        $oferta->save();
+
+        return redirect()->back()->with('success', 'Informacioni u përditësua me sukses!');
+    }
+    public function staus_comm(Request $request, string $id)
+    {
+        $validated['status_comm'] = $request->input('status_comm');
+        $oferta = Oferta::findOrFail($id);
+        
+        $oferta->fill($validated);
+        $oferta->save();
+
+        return redirect()->back()->with('success', 'Mesazhi u dërgua me sukses!');
+    }
+
+    public function product_check(Request $request, string $id)
+    {
+        $validated['status'] = 1;
+        $oferta = Product::findOrFail($id);
+        
+        $oferta->fill($validated);
+        $oferta->save();
+
+        return redirect()->back()->with('success', 'Informacioni u përditësua me sukses!');
+    }
+    public function product_uncheck(Request $request, string $id)
+    {
+        $validated['status'] = 2;
+        $oferta = Product::findOrFail($id);
+        
+        $oferta->fill($validated);
+        $oferta->save();
+
+        return redirect()->back()->with('success', 'Informacioni u përditësua me sukses!');
     }
 }
