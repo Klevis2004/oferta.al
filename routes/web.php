@@ -29,8 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/oferta_store', [AllController::class, 'oferta_store'])->name('oferta_store');
     Route::post('/product_store', [AllController::class, 'product_store'])->name('product_store');
 
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-
+    Route::get('/contollPanel', [AdminController::class, 'index'])->name('dashboarddd');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
