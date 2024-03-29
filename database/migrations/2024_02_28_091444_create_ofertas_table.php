@@ -24,6 +24,8 @@ return new class extends Migration
             ->references('id')->on('products')
             ->onDelete('cascade')
             ->onUpdate('cascade');
+            $table->integer('status')->default(0);
+            $table->text('status_comm')->nullable();
         });
     }
 

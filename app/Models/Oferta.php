@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Oferta extends Model
 {
-    protected $fillable = [ 'emri', 'sasia', 'komenti', 'file', 'info', 'products_id'];
+    protected $fillable = [ 'emri', 'sasia', 'komenti', 'file', 'info', 'products_id', 'status', 'status_comm'];
     use HasFactory;
 }
