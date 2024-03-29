@@ -25,7 +25,9 @@ class ProductRequest extends FormRequest
             'emri' => 'string',
             'status' => 'integer',
             'komenti' => 'min:10',
-            'data_dorezimit' => 'required',
+            'data_dorezimit' => 'date',
+            'cmimi_total' => 'integer',
+            'cmimi_ofetuar' => 'integer'
         ];
     }
 }

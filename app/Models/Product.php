@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable = [ 'emri','komenti','data_dorezimit', 'status', 'user_id'];
+    protected $fillable = [ 'emri','komenti','data_dorezimit', 'status', 'user_id', 'cmimi_total', 'cmimi_ofetuar'];
     use HasFactory;
 }

@@ -18,6 +18,8 @@ return new class extends Migration
             $table->text('komenti');
             $table->date('data_dorezimit');
             $table->integer('status')->default('0');
+            $table->integer('cmimi_total')->default('0');
+            $table->integer('cmimi_ofetuar')->default('0');
             $table->foreignId('user_id')
             ->nullable()
             ->references('id')->on('users')

@@ -15,10 +15,39 @@
         $('#table_id').DataTable({
             dom: 'Bfrtip',
             responsive: false,
-            pageLength: 25,
+            pageLength: 4,
             buttons: [
                 'copy', 'excel', 'pdf', 'print'
             ]
+        });
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2();
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        // Function to initialize Select2 and set focus
+        function initializeSelect2() {
+            $('.js-example-basic').select2({
+                dropdownParent: $('#exampleModal')
+            });
+
+            setTimeout(function() {
+                $('.select2-container--open .select2-search--dropdown .select2-search__field').first()
+                    .focus();
+            }, 500); // Adjust the timeout as needed
+        }
+
+        // Initialize Select2 when the modal is opened
+        $('#exampleModal').on('shown.bs.modal', function() {
+            console.log("Modal shown, initializing Select2");
+            initializeSelect2();
         });
     });
 </script>
